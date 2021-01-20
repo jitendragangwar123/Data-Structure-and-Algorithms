@@ -1,142 +1,94 @@
 #include <stdio.h>
-#include <conio.h>
-#include <stdlib.h>
+#include<malloc.h>
+#include<stdlib.h>
 
-void add();
-void delete();
-void disp();
-void search();
-void reverse(struct node **);
-
+void createnode();
+void display();
+void reverse();
 
 struct node
 {
-	int data;
-	struct node *link;
+    int data;               //structure declaration
+    struct node *next;
 };
 
-struct node *current_node, *new_node, *head;
+typedef struct node node;   //node is the type of variable node
 
-void add()
+node *head=NULL;
+
+//Start the main function
+int main()
 {
-	new_node=(struct node *)malloc(sizeof (struct node *));
-	new_node->link=NULL;
-	printf("\nEnter a Number: ");
-	scanf("%d",&new_node->data);
-	if(head == NULL)
-		head = new_node;
-	
-	else 
-	{
-		new_node->link = head;
-		head = new_node;
-	}
-	return;
+   int n,x,i;
+   char y;
+   
+   printf("Enter the number of node in linkedlist:\n");
+   scanf("%d",&n);
+   for(i=0;i<n;i++)
+
+   {
+       createnode();            //creating  the linkedlist
+   }
+
+   printf("Display the LinkedList:\n");
+   display();                   //display the linkedlist
+   reverse();                   // reverse the linkedlist
+   printf("\nDisplay the Reverse LinkedList:\n");
+   display();
 }
 
-void delete()
+void createnode()
 {
-	int n;
-	struct node *prober, *del;
-	printf("\nEnter a Number to be deleted from Linked List: ");
-	scanf("%d",&n);
-	prober = head;
-	
-	while(prober -> link)
-	{
-		if(prober->link->data==n)
-		{
-			del = prober->link;
-			prober->link = prober->link->link;
-			free(del);
-		}
-		prober=prober->link;
-	}
-	return;
-}
-
-void disp()
-{
-	struct node *prober;
-	prober=head;
-	while(prober)
-	{
-		printf("%d ",prober->data);
-		prober=prober->link;
-	}
-	return;
-}
-void search()  
-{  
-    struct node *prober;  
-    int item,i=0,flag;  
-    prober = head;   
-    if(prober == NULL)  
-    {  
-        printf("\nEmpty List\n");  
-    }  
-    else  
-    {   
-        printf("\nEnter item which you want to search?\n");   
-        scanf("%d",&item);  
-        while (prober!=NULL)  
-        {  
-            if(prober->data == item)  
-            {  
-                printf("item found at location %d ",i+1);  
-                flag=0;  
-            }   
-            else  
-            {  
-                flag=1;  
-            }  
-            i++;  
-            prober = prober -> link;  
-        }  
-        if(flag==1)  
-        {  
-            printf("Item not found\n");  
-        }  
-    }     
-    
-    void reverse(struct node **head)
-{
-    struct node *p, *q, *r;
- 
-    p = q = r = *head;
-    p = p->link->link;
-    q = q->link;
-    r->link = NULL;
-    q->link = r;
- 
-    while (p != NULL)
+    node *temp;         //creating node type pointer variable
+    temp=(node*) malloc(sizeof(node));      //memory allocation 
+    if (temp==NULL)                         //whose size equal to node data type
     {
-        r = q;
-        q = p;
-        p = p->link;
-        q->link = r;
+        printf("memory is full");
+        exit(0);
     }
-    *head = q;
+    
+    printf("Enter the Node in LinkedList:\n");
+    scanf("%d",&temp->data);
+    temp->next=NULL;
+    
+    if(head==NULL)              //if node is first node
+        head=temp;
+    else
+    {
+        node *q=head;
+        while(q->next!=NULL)    //if node is not a first node    
+        {
+            q=q->next;
+        }
+        q->next=temp;
+        temp=NULL;
+        q=NULL;
+    }
 }
- }  
-void main()
+
+void display()
 {
-	int n;int x=1;
-	while(x)
-	{
-		printf("Choose an action: \nEnter 1 to add a node\nEnter 2 to delete a node\nEnter 3 to display the linked list\nEnter 4 to search the element\nEnter 5 to Reverse of linked list");
-		scanf("%d",&n);
-	switch (n)
-		{
-			case 1: add(); break;
-			case 2: delete(); break;
-			case 3: disp(); break;
-			case 4: search(); break;
-			//case 5: reverse(); break;
-			case 6: x=0; break;
-			default: printf("\nChoose from mentioned options only!\n");
-		}
+    node *q;
+    q=head;
+    while(q)
+    {
+        printf("%d->",q->data);
+        q=q->next;              
+    }
+    q=NULL;
 }
-	return;
+
+void reverse()
+{
+    node *p=NULL, *q=NULL, *r=head;
+    while(r)
+    {
+        q=r->next;
+        r->next=p;      //reversing the linkedlist
+        p=r;
+        r=q;
+    }
+    head=p;
 }
+
 
