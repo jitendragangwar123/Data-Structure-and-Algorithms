@@ -1,26 +1,27 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct node
+struct node   //Crate a node of struct type
 {
-	int data;
-	struct node *link;
+      int data;
+      struct node *link;
 };
 
-struct node *arr[10];int mark_arr[10];
+struct node *arr[10];   //for text file 
+int mark_arr[10];
 
 
-void disp(int V)
+void disp(int V)  //Function for display the Adjacency list
 {
 	printf("\nThe Adjacency List is: \n");
 	int i;
 	struct node *prober=arr[0];
-	for(i=0;i<=V;i++)
+	for(i=1;i<=V;i++)
 	{
 		prober=arr[i];
-		while(prober)
+		while(prober)  //prober from beginning to end of the list
 		{
-			printf("%d->%d ",i,prober->data);
+			printf("%d->%d ",i,prober->data);   //print the Adjacency list data 
 			prober=prober->link;
 		}
 		printf("\n");
@@ -29,20 +30,20 @@ void disp(int V)
 }
 
 
-void ConComp(int V)
+void ConComp(int V)   //Function for count the number of connectedd components 
 {
-	int marker=0,grpCount=1;
+	int marker=0,grpCount=1;    //marker->used for group number
 	int i;
 	
-	for(i=0;i<10;i++)
+	for(i=0;i<10;i++)           //loop for initialize mark array with 0   (0,0,0,0.......)
 		mark_arr[i]=0;
 	
-	struct node *prober=arr[0];
+	struct node *prober=arr[0];    //initialize the first potion of prober
 	for(i=1;i<=V;i++)
 	{
 		if(mark_arr[i]==0)
 		{
-			mark_arr[i]=grpCount;
+			mark_arr[i]=grpCount;   //1  1+1=2
 			grpCount++;
 		}
 		
@@ -51,25 +52,26 @@ void ConComp(int V)
 		prober=arr[i];
 		while(prober)
 		{
-			if(mark_arr[prober->data]==0)
+			if(mark_arr[prober->data]==0)     //check to see if the vertex is already mark with the gp number 
 			{
-				mark_arr[prober->data]=marker;
-				prober=prober->link;
+				mark_arr[prober->data]=marker;  //the vertex with the current gp number
+				prober=prober->link;             //changed prober point to the next node
 			}
 			
 			else 
 			{
-				if(mark_arr[prober->data]<marker)
+				if(mark_arr[prober->data]<marker)    //Check to see if the current gp number is less then the vertices privious gp number
 				{
-					struct node *probe2=arr[i]; int marker2=mark_arr[prober->data];
-					while(probe2!=prober)
+					struct node *probe2=arr[i]; 
+					int marker2=mark_arr[prober->data]; //to set the marker with the value of lower gp number
+					while(probe2!=prober)    //changes the gp number for the whole list
 					{
 						mark_arr[probe2->data]=marker2;
 						probe2=probe2->link;
 					}
-					marker=mark_arr[prober->data];
+					marker=mark_arr[prober->data];   //Change the value of marker with the old value of marker
 				}
-				else mark_arr[prober->data]=marker;
+				else mark_arr[prober->data]=marker;  
    				
 				prober=prober->link;
 			}	
@@ -81,31 +83,32 @@ void ConComp(int V)
 }
 
 
-void main()
-{
-
-	struct node *prober;
-	int i=0,d,V,E;
+void main()     //Start the main Function
+   {  
 	
-	for(i=0;i<10;i++)
-		arr[i]=NULL;
+       struct node *prober;   //traverse the list
+	int i=0,d,V,E;        //V->Vertices ,E->Edges 
 	
-	char ch1,ch2;
+	for(i=0;i<10;i++)    //Initialize the adjacency list with NULL
+	     arr[i]=NULL;
 	
-	ch1 = getchar();
-	V=ch1-'0';
-	ch1 = getchar();
-	ch2 = getchar();
-	E=ch2-'0';
-	ch2 = getchar();
+	char ch1,ch2;        //Reads the characters from input text file
 	
-	while(ch2!=EOF||ch1!=EOF)
+	ch1 = getchar();     //Reads the first character from the input text file 
+	V=ch1-'0';           //Converts character to integer data types 
+	                     //52-48=4
+	ch1 = getchar();     //Reads the white space
+	ch2 = getchar();     //Reads the next character from the input text file 
+	E=ch2-'0';           //Converts character to integer data types 
+	ch2 = getchar();     //Reads the new line Characters 
+	
+	while(ch2!=EOF||ch1!=EOF)    //End of file character
 	{
-		ch1 = getchar();
-		if(ch1==EOF) break;
+		ch1 = getchar();     //Reads the first character 
+		if(ch1==EOF) break;  //here we check to see the end of file
 		
-		struct node *new_node=(struct node *)malloc(sizeof(struct node));
-		new_node->link=NULL;
+		struct node *new_node=(struct node *)malloc(sizeof(struct node)); // Dynamic memory Allocation
+		new_node->link=NULL;  
 		d=ch1-'0';
 			
 		ch2 = getchar();
@@ -113,10 +116,10 @@ void main()
 	
 		ch2 = getchar();
 		if(ch2==EOF) break;
-		new_node->data=ch2-'0';
+		new_node->data=ch2-'0';   //stores the converted value into new node
 		
-		prober=arr[d];
-		if(arr[d]!=NULL) 
+		prober=arr[d];    //start form vertex 1
+		if(arr[d]!=NULL)  
 		{
 			
 			while(prober->link)
@@ -127,11 +130,11 @@ void main()
 		}
 		else arr[d]=new_node;
 				
-		ch2=getchar();
+		ch2=getchar(); //Reads the new line character
 	}
 
-	disp(V);
-	ConComp(V);
+	disp(V);   //call the display function of Adjacency list
+	ConComp(V);  // call the connected component function
 	return;
 }
 
