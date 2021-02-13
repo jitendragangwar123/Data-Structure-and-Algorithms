@@ -1,22 +1,22 @@
 # Data-Structure-and-Algorithms
-This Repository have Ds and algo implementation using C++ and C language.
-DSP_LAB
-Index
-Week 1
-Stack
-Stack using array (Link)
-Stack using linkedlist (Link)
-Queue
-Queue using array (Link)
-Queue using linkedlist (Link)
-Stack & Queue
-Queue using stack (Link)
-Stack using queue (Link)
-Infix - Postfix
-Infix to Postfix (Link)
-Tower of Hanoi
-Tower of Hanoi Iterative (Link)
-Week 2
+This Repository have Ds and algo implementation using C language.
+# DSP_LAB
+   Index
+   # Week 1
+    # Stack
+    Stack using array 
+    Stack using linkedlist 
+    # Queue
+    Queue using array 
+    Queue using linkedlist 
+    #Stack & Queue
+    Queue using stack 
+    Stack using queue 
+    #Infix - Postfix
+    Infix to Postfix
+    Tower of Hanoi
+    Tower of Hanoi Iterative
+  # Week 2
 Josephus problem (Link)
 Single linkedlist (Link)
 Unsorted array search (Link)
